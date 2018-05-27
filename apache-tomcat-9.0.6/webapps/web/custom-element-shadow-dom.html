@@ -20,28 +20,28 @@
 			constructor() {
 				super();
 				this.toogle = 0;
-				this.url = `http://localhost:8080/web/my-custom-element-shadow-dom.html`;
-				this.content = `<div id="my-div" >
-				<h1>MyCustomElementShadowDom</h1>
-				<p>placeholder ...</p>
-				<button type="button">Load</button>		
-				</div>`;
+				this.url = `http://localhost:8080/web/content.html`;
+				this.content = `<p id="content">placeholder ...</p>`;
+				this.container = `<div id="my-div" >
+					<h1>MyCustomElementShadowDom</h1>
+					`+this.content+`
+					<button type="button">Load</button>		
+					</div>`;
 			}
 			// Called when your element is inserted in the DOM or
 			// immediately after the constructor if it’s already in the DOM
 			connectedCallback() {
 				console.log('Custom element added to page.');
 			    let shadowRoot = this.attachShadow({mode: 'open'});
-			    shadowRoot.innerHTML = this.content;
-				this.addEventListener('click', e => {
-					let child = document.getElementById("my-div");	
+			    shadowRoot.innerHTML = this.container;
+				this.addEventListener('click', e => {						
 					if (this.toogle == 0) {
 						this.toogle = 1;
 						this.load(shadowRoot);
 					} else {
-						console.log('Custom elements restores original ' + this.content);	
+						console.log('Custom elements restores original ' + this.container);	
 						this.toogle = 0;
-						shadowRoot.innerHTML = this.content;
+						shadowRoot.innerHTML = this.container;
 					}
 				});
 			}
@@ -50,7 +50,12 @@
 				var xhttp = new XMLHttpRequest();
 				xhttp.onreadystatechange = function() {
 					if (this.readyState == 4 && this.status == 200) {
-						shadowRoot.innerHTML = this.responseText;
+						let child = shadowRoot.getElementById("content");
+						  var myDiv = document.createElement("div");
+						  myDiv.innerHTML = this.responseText; 
+						child.replaceWith(myDiv);
+
+		
 					}
 				};
 				xhttp.open("GET", this.url, true);

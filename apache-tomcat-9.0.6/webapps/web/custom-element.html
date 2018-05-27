@@ -20,28 +20,30 @@
 			constructor() {
 				super();
 				this.toogle = 0;
-				this.url = `http://localhost:8080/web/my-custom-element.html`;
-				this.content = `<div id="my-div" >
-				<h1>MyCustomElement</h1>
-				<p>placeholder ...</p>
-				<button type="button">Load</button>		
-				</div>`;
+				this.url = `http://localhost:8080/web/content.html`;
+				this.content = `<p id="content">placeholder ...</p>`;
+				this.container = `<div id="my-div" >
+					<h1>MyCustomElement</h1>
+					`+this.content+`
+					<button type="button">Load</button>		
+					</div>`;
+				
 			}
 			// Called when your element is inserted in the DOM or
 			// immediately after the constructor if it’s already in the DOM
 			connectedCallback() {
 				console.log('Custom element added to page.');
-				this.innerHTML = this.content;
+				this.innerHTML = this.container;
 				this.addEventListener('click', e => {
-					let child = document.getElementById("my-div");	
+					let child = document.getElementById("content");	
 					if (this.toogle == 0) {
 						console.log('Custom elements loads content from ' + this.url);	
 						this.toogle = 1;
 						this.load(child);
 					} else {
-						console.log('Custom elements restores original ' + this.content);	
+						console.log('Custom elements restores original ' + this.container);	
 						this.toogle = 0;
-						this.innerHTML = this.content;
+						this.innerHTML = this.container;
 					}
 				});
 			}
