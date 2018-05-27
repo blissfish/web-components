@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<template id="my-template">
+<div id="my-div">
+	<h1>MyTemplateContent (Loaded)</h1>
+	<p>Lorem ipsum dolor sit amet, consectetur adipisici elit, sed
+		eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad
+		minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+		aliquid ex ea commodi consequat. Quis aute iure reprehenderit in
+		voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
+		sint obcaecat cupiditat non proident, sunt in culpa qui officia
+		deserunt mollit anim id est laborum.</p>
+	<button onclick="restore()" type="button">Load</button>
+</div>
+</template>
+<body>
+<a href="/web">Home</a>
+
+	<div id="my-div">
+		<h1>MyTemplateContent</h1>
+		<p>placeholder ...</p>
+		<button onclick="showContent()" type="button">Load</button>
+	</div>
+
+	<script>
+		function showContent() {
+			let templateElement = document.getElementById('my-template');
+			var newChild = templateElement.content.cloneNode(true);
+			let oldChild = document.getElementById('my-div');
+			oldChild.parentNode.replaceChild(newChild, oldChild);
+		}
+	
+		function restore() {
+			let element = document.getElementById('my-div');
+			element.innerHTML = `<div id="my-div" >
+				<h1>MyTemplateContent</h1>
+				<p>placeholder ...</p>
+				<button onclick="showContent()" type="button">Load</button>		
+				</div>`;
+		}
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+<html>
+<head>
+<script src="webcomponents-bundle.js"></script>
+<link rel="stylesheet" type="text/css" href="style.css">
+<title>Web Components</title>
+</head>
+<body>
+<a href="/web">Home</a>
+
+	<script>
+		// hide body to prevent FOUC
+		document.body.style.opacity = 0;
+		window.addEventListener('WebComponentsReady', function() {
+			// show body now that everything is ready
+			document.body.style.opacity = 1;
+		});
+	</script>
+	<script>
+		class MyCustomElement extends HTMLElement {
+			constructor() {
+				super();
+				this.toogle = 0;
+				this.url = `http://localhost:8080/web/my-custom-element.html`;
+				this.content = `<div id="my-div" >
+				<h1>MyCustomElement</h1>
+				<p>placeholder ...</p>
+				<button type="button">Load</button>		
+				</div>`;
+			}
+			// Called when your element is inserted in the DOM or
+			// immediately after the constructor if it’s already in the DOM
+			connectedCallback() {
+				console.log('Custom element added to page.');
+				this.innerHTML = this.content;
+				this.addEventListener('click', e => {
+					let child = document.getElementById("my-div");	
+					if (this.toogle == 0) {
+						console.log('Custom elements loads content from ' + this.url);	
+						this.toogle = 1;
+						this.load(child);
+					} else {
+						console.log('Custom elements restores original ' + this.content);	
+						this.toogle = 0;
+						this.innerHTML = this.content;
+					}
+				});
+			}
+			load(child) {
+				var xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						child.innerHTML = this.responseText;
+					}
+				};
+				xhttp.open("GET", this.url, true);
+				xhttp.send();
+			}
+		}
+		window.customElements.define('my-custom-element', MyCustomElement);
+	</script>
+
+	<my-custom-element></my-custom-element>
+</body>
+</html>

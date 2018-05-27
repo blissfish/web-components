@@ -1,0 +1,64 @@
+<html>
+<head>
+<script src="webcomponents-bundle.js"></script>
+<link rel="stylesheet" type="text/css" href="style.css">
+<title>Web Components</title>
+</head>
+<body>
+<a href="/web">Home</a>
+
+	<script>
+		// hide body to prevent FOUC
+		document.body.style.opacity = 0;
+		window.addEventListener('WebComponentsReady', function() {
+			// show body now that everything is ready
+			document.body.style.opacity = 1;
+		});
+	</script>
+	<script>
+		class MyCustomElementShadowDom extends HTMLElement {
+			constructor() {
+				super();
+				this.toogle = 0;
+				this.url = `http://localhost:8080/web/my-custom-element-shadow-dom.html`;
+				this.content = `<div id="my-div" >
+				<h1>MyCustomElementShadowDom</h1>
+				<p>placeholder ...</p>
+				<button type="button">Load</button>		
+				</div>`;
+			}
+			// Called when your element is inserted in the DOM or
+			// immediately after the constructor if it’s already in the DOM
+			connectedCallback() {
+				console.log('Custom element added to page.');
+			    let shadowRoot = this.attachShadow({mode: 'open'});
+			    shadowRoot.innerHTML = this.content;
+				this.addEventListener('click', e => {
+					let child = document.getElementById("my-div");	
+					if (this.toogle == 0) {
+						this.toogle = 1;
+						this.load(shadowRoot);
+					} else {
+						console.log('Custom elements restores original ' + this.content);	
+						this.toogle = 0;
+						shadowRoot.innerHTML = this.content;
+					}
+				});
+			}
+			load(shadowRoot) {
+				console.log('Custom elements loads content from ' + this.url);	
+				var xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						shadowRoot.innerHTML = this.responseText;
+					}
+				};
+				xhttp.open("GET", this.url, true);
+				xhttp.send();
+			}
+		}
+		window.customElements.define('my-custom-element-shadow-dom', MyCustomElementShadowDom);
+	</script>
+	<my-custom-element-shadow-dom></my-custom-element-shadow-dom>	
+</body>
+</html>

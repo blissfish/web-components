@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<link rel="import" href="my-html-import.html">
+
+<body>
+<a href="/web">Home</a>
+
+
+  <script>
+    var link = document.querySelector('link[rel="import"]');
+    var content = link.import;
+
+    // Grab DOM from warning.html's document.
+    var el = content.querySelector('#my-div');
+
+    document.body.appendChild(el.cloneNode(true));
+  </script>
+</body>
+</html>
