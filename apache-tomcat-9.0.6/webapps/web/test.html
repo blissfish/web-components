@@ -1,0 +1,93 @@
+<html>
+<head>
+<script src="webcomponents-bundle.js"></script>
+
+<style>
+.lg{ color: lightgreen; }
+.r{ color: red; }
+</style>
+<script>
+class MyElement extends HTMLElement {
+	  connectedCallback() {
+	    this.textContent = 'I am a custom element.';
+	  }
+	}
+	function test() {	
+		let supported = '<p class="lg">God</p>';		
+		let notSupported = '<p class="r">Bad</p>';
+		try {
+			var root = document.getElementById("shadow-test");
+			if (root == null) {
+				root = document.createElement('div');
+				root.setAttribute("id", "shadow-test");
+			}
+			root.createShadowRoot();
+			document.getElementById("shadow-dom-test").innerHTML = supported;
+		} catch (err) {
+			console.log(err);
+			document.getElementById("shadow-dom-test").innerHTML = notSupported;
+		}finally {
+			var child = document.getElementById("shadow-test");
+			if (child += null) {
+				child.parentNode.removeChild(child);
+			}
+		}
+
+		try {
+			customElements.define('x-foo', MyElement);
+			document.getElementById("custom-element-test").innerHTML = supported;
+		} catch (err) {			
+			console.log(err);
+			document.getElementById("custom-element-test").innerHTML = notSupported;
+		}
+
+		if('import' in document.createElement('link')) {
+			document.getElementById("import-test").innerHTML = supported;
+		} else{
+			document.getElementById("import-test").innerHTML = notSupported;
+		}
+		
+		if('content' in document.createElement('template')) {
+			document.getElementById("template-test").innerHTML = supported;
+		} else{
+			document.getElementById("template-test").innerHTML = notSupported;
+		}		
+	}
+</script>
+</head>
+<body onload="test()">
+
+	<table>
+		<tr>
+			<td>
+				<p>Import</p>
+			</td>
+			<td>
+				<p>Template</p>
+			</td>
+			<td>
+				<p>Custom</p>
+			</td>
+			<td>
+				<p>Shadow</p>
+			</td>
+		</tr>	
+		<tr>
+			<td>
+				<div id="import-test"></div>
+			</td>
+			<td>
+				<div id="template-test"></div>
+			</td>
+			<td>
+				<div id="custom-element-test"></div>
+			</td>
+			<td>
+				<div id="shadow-dom-test"></div>
+			</td>
+		</tr>
+	</table>
+
+</body>
+
+</html>
