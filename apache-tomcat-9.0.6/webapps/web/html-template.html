@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <template id="my-template">
-<div id="my-div">
+<div id="my-div" onclick="restore()">
 	<h1>MyTemplateContent (Loaded)</h1>
 	<p>Lorem ipsum dolor sit amet, consectetur adipisici elit, sed
 		eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad
@@ -10,16 +10,16 @@
 		voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
 		sint obcaecat cupiditat non proident, sunt in culpa qui officia
 		deserunt mollit anim id est laborum.</p>
-	<button onclick="restore()" type="button">Load</button>
+	<button type="button">Load</button>
 </div>
 </template>
 <body>
 <a href="/web">Home</a>
 
-	<div id="my-div">
+	<div id="my-div" onclick="showContent()">
 		<h1>MyTemplateContent</h1>
 		<p>placeholder ...</p>
-		<button onclick="showContent()" type="button">Load</button>
+		<button  type="button">Load</button>
 	</div>
 
 	<script>
@@ -31,11 +31,13 @@
 		}
 	
 		function restore() {
-			let element = document.getElementById('my-div');
-			element.innerHTML = `<div id="my-div" >
+			let oldChild = document.getElementById('my-div');
+			let newChild = document.createElement("div");
+			newChild.addEventListener("onClick", showContent, capture)
+			oldChild.innerHTML = `<div id="my-div" onclick="showContent()">
 				<h1>MyTemplateContent</h1>
 				<p>placeholder ...</p>
-				<button onclick="showContent()" type="button">Load</button>		
+				<button type="button">Load</button>		
 				</div>`;
 		}
 	</script>
