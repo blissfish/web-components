@@ -21,25 +21,35 @@
 				super();
 				this.toogle = 0;
 				this.url = `http://localhost:8080/web/content.html`;
+<<<<<<< HEAD
 				this.content = `<h1>MyCustomElement</h1><div id="my-div" >				
 				<p>placeholder ...</p>						
 				</div><button type="button">Load</button>`;
+=======
+				this.content = `<p id="content">placeholder ...</p>`;
+				this.container = `<div id="my-div" >
+					<h1>MyCustomElement</h1>
+					`+this.content+`
+					<button type="button">Load</button>		
+					</div>`;
+				
+>>>>>>> branch 'master' of https://github.com/blissfish/web-components.git
 			}
 			// Called when your element is inserted in the DOM or
 			// immediately after the constructor if it’s already in the DOM
 			connectedCallback() {
 				console.log('Custom element added to page.');
-				this.innerHTML = this.content;
+				this.innerHTML = this.container;
 				this.addEventListener('click', e => {
-					let child = document.getElementById("my-div");	
+					let child = document.getElementById("content");	
 					if (this.toogle == 0) {
 						console.log('Custom elements loads content from ' + this.url);	
 						this.toogle = 1;
 						this.load(child);
 					} else {
-						console.log('Custom elements restores original ' + this.content);	
+						console.log('Custom elements restores original ' + this.container);	
 						this.toogle = 0;
-						this.innerHTML = this.content;
+						this.innerHTML = this.container;
 					}
 				});
 			}

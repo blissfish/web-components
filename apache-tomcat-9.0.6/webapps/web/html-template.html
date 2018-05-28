@@ -16,11 +16,20 @@
 <body>
 <a href="/web">Home</a>
 
+<<<<<<< HEAD
+=======
+<div id="container">
+>>>>>>> branch 'master' of https://github.com/blissfish/web-components.git
 	<div id="my-div" onclick="showContent()">
 		<h1>MyTemplateContent</h1>
 		<p>placeholder ...</p>
+<<<<<<< HEAD
 		<button  type="button">Load</button>
+=======
+		<button type="button">Load</button>
+>>>>>>> branch 'master' of https://github.com/blissfish/web-components.git
 	</div>
+</div>
 
 	<script>
 		function showContent() {
@@ -31,10 +40,15 @@
 		}
 	
 		function restore() {
+<<<<<<< HEAD
 			let oldChild = document.getElementById('my-div');
 			let newChild = document.createElement("div");
 			newChild.addEventListener("onClick", showContent, capture)
 			oldChild.innerHTML = `<div id="my-div" onclick="showContent()">
+=======
+			let element = document.getElementById('container');
+			element.innerHTML = `<div id="my-div" onclick="showContent()" >
+>>>>>>> branch 'master' of https://github.com/blissfish/web-components.git
 				<h1>MyTemplateContent</h1>
 				<p>placeholder ...</p>
 				<button type="button">Load</button>		
