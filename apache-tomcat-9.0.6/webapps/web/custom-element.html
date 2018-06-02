@@ -1,72 +1,58 @@
 <html>
 <head>
-<script src="webcomponents-bundle.js"></script>
-<link rel="stylesheet" type="text/css" href="style.css">
-<title>Web Components</title>
+<style>
+p {
+	font-style: italic;
+	color: indigo;
+	font-size: 18px;
+}
+
+.rcorners {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	border-radius: 25px;
+	background: lightblue;
+	color: white;
+	padding: 16px;
+	width: 320px;
+	height: 120px;
+	box-shadow: 4px 4px 6px #000000;
+}
+</style>
+<title>Super Simple Web Component Samples</title>
 </head>
 <body>
-<a href="/web">Home</a>
+	<h1>Super Simple Web Component Samples</h1>
+		<a href="/web">Home</a>
+	
+	<p>Web components are a set of web platform APIs that allow you to
+		create new custom, reusable, encapsulated HTML tags to use in web
+		pages and web apps. Custom components and widgets build on the Web
+		Component standards, will work across modern browsers, and can be used
+		with any JavaScript library or framework that works with HTML. 
+		</p>
+	<p>from <a href="https://www.webcomponents.org/">https://www.webcomponents.org/</a></p>
+	<hr />
+	
+	<custom-element></custom-element>
 
-	<script>
-		// hide body to prevent FOUC
-		document.body.style.opacity = 0;
-		window.addEventListener('WebComponentsReady', function() {
-			// show body now that everything is ready
-			document.body.style.opacity = 1;
-		});
-	</script>
-	<script>
-		class MyCustomElement extends HTMLElement {
-			constructor() {
-				super();
-				this.toogle = 0;
-				this.url = `http://localhost:8080/web/content.html`;
-<<<<<<< HEAD
-				this.content = `<h1>MyCustomElement</h1><div id="my-div" >				
-				<p>placeholder ...</p>						
-				</div><button type="button">Load</button>`;
-=======
-				this.content = `<p id="content">placeholder ...</p>`;
-				this.container = `<div id="my-div" >
-					<h1>MyCustomElement</h1>
-					`+this.content+`
-					<button type="button">Load</button>		
-					</div>`;
-				
->>>>>>> branch 'master' of https://github.com/blissfish/web-components.git
+	<script type="text/javascript">
+		customElements.define('custom-element',
+			class extends HTMLElement {
+				constructor() {
+					super();
+				    const script = '<style>p {color: blue;font-size: 24px;</style>';
+
+					this.innerHTML = /*script+*/`<div class="rcorners"><h2>A Clickable Custom Element</h2><p>Lorem ipsum dolor sit amet, consectetur adipisici elit ...</p></div>`;
+					this.addEventListener("click", function(e) {
+						console.log('Got a click event');
+						console.log(e);
+					});
+				}
 			}
-			// Called when your element is inserted in the DOM or
-			// immediately after the constructor if it’s already in the DOM
-			connectedCallback() {
-				console.log('Custom element added to page.');
-				this.innerHTML = this.container;
-				this.addEventListener('click', e => {
-					let child = document.getElementById("content");	
-					if (this.toogle == 0) {
-						console.log('Custom elements loads content from ' + this.url);	
-						this.toogle = 1;
-						this.load(child);
-					} else {
-						console.log('Custom elements restores original ' + this.container);	
-						this.toogle = 0;
-						this.innerHTML = this.container;
-					}
-				});
-			}
-			load(child) {
-				var xhttp = new XMLHttpRequest();
-				xhttp.onreadystatechange = function() {
-					if (this.readyState == 4 && this.status == 200) {
-						child.innerHTML = this.responseText;
-					}
-				};
-				xhttp.open("GET", this.url, true);
-				xhttp.send();
-			}
-		}
-		window.customElements.define('my-custom-element', MyCustomElement);
+		);
 	</script>
 
-	<my-custom-element></my-custom-element>
+
 </body>
 </html>

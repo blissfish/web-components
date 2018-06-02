@@ -7,11 +7,7 @@
 .r{ color: red; }
 </style>
 <script>
-class MyElement extends HTMLElement {
-	  connectedCallback() {
-	    this.textContent = 'I am a custom element.';
-	  }
-	}
+
 	function test() {	
 		let supported = '<p class="lg">God</p>';		
 		let notSupported = '<p class="r">Bad</p>';
@@ -54,8 +50,18 @@ class MyElement extends HTMLElement {
 		}		
 	}
 </script>
+
+<script>
+class MyElement extends HTMLElement {
+	  connectedCallback() {
+	    this.textContent = 'I am a custom element.';
+	  }
+	}
+</script>
+
 </head>
 <body onload="test()">
+	<a href="/web">Home</a>
 
 	<table>
 		<tr>

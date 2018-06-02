@@ -13,17 +13,17 @@ body {
     display: block;
     margin: 10px;
 }
-/*
-.rcorners1 {
+
+.rcorners {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
     border-radius: 25px;
- 	background: linear-gradient(to right, blue, indigo);
+ 	background: lightblue;
  	color: white;
     padding: 20px;
     width: 380px;
     height: 180px;
     box-shadow: 4px 4px 6px #000000;
 }
-*/
+
 </style>

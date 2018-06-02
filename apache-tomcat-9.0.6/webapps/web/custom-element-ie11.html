@@ -1,0 +1,45 @@
+<html>
+<head>
+<script src="webcomponents-bundle.js"></script>
+<link rel="stylesheet" type="text/css" href="style.css">
+<title>Web Components</title>
+</head>
+<body>
+<a href="/web">Home</a>
+	<script>
+		// hide body to prevent FOUC
+		document.body.style.opacity = 0;
+		window.addEventListener('WebComponentsReady', function() {
+			// show body now that everything is ready
+			document.body.style.opacity = 1;
+			var __extends = (this && this.__extends) || (function () {
+			    var extendStatics = Object.setPrototypeOf ||
+			        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+			        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+			    return function (d, b) {
+			        extendStatics(d, b);
+			        function __() { this.constructor = d; }
+			        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+			    };
+			})();
+			customElements.define('element-details', /** @class */ (function (_super) {
+			    __extends(class_1, _super);
+			    function class_1() {
+			        var _this = _super.call(this) || this;
+			        _this.attachShadow({ mode: 'open' }).innerHTML = "<div id=\"container\" ><h2>Element</h2><p id=\"content\">placeholder ...</p></div>";
+			        return _this;
+			    }
+			    return class_1;
+			}(HTMLElement)));
+		});
+	</script>
+
+	<script>
+
+	</script>
+
+	<element-details></element-details>
+</body>
+	
+
+</html>
