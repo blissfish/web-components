@@ -18,8 +18,7 @@
 		class MyCustomElement extends HTMLElement {
 			constructor() {
 				super();
-				this.newChild = document.createElement("div");
-				this.newChild.setAttribute("id", "container");
+				
 				this.toogle = 0;
 				this.url = `http://localhost:8080/web/content.html`;				
 				this.container = `<div id="container" ><p id="content">placeholder ...</p></div>`;
@@ -31,9 +30,11 @@
 				this.innerHTML = this.container;
 				this.addEventListener('click', e => {
 					if (this.toogle == 0) {
-						console.log('Custom elements loads content from ' + this.url);	
+						console.log('Custom elements loads content ...');	
 						this.toogle = 1;
-						this.load(this.newChild);
+						let newChild = document.createElement("div");
+						newChild.setAttribute("id", "container");
+						this.load(newChild);
 					} else {
 						console.log('Custom elements restores original ' + this.container);	
 						this.toogle = 0;
