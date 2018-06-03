@@ -4,7 +4,7 @@
 p {
 	font-style: italic;
 	color: indigo;
-	font-size: 18px;
+	font-size: 16px;
 }
 
 .rcorners {
@@ -47,7 +47,6 @@ p {
 
 					this.toogle = 0;
 				    
-
 					this.innerHTML = /*script+*/`<div id="container" class="rcorners"><h2>A Clickable Custom Element</h2><p id="content">Lorem ipsum dolor sit amet, consectetur adipisici elit ...</p></div>`;
 					this.addEventListener("click", function(e) {
 						console.log('Got a click event');
@@ -55,9 +54,7 @@ p {
 						if (this.toogle == 0) {
 							console.log('Custom elements loads content ');	
 							this.toogle = 1;
-							let newChild = document.createElement("div");
-							newChild.setAttribute("id", "container");
-							this.load(newChild);
+							this.load();
 						} else {
 							console.log('Custom elements restores original ' + container);	
 							this.toogle = 0;
@@ -65,11 +62,14 @@ p {
 						}
 					});
 				}
-				load(newChild) {				
+				load() {				
 					let xhttp = new XMLHttpRequest();
 					xhttp.onreadystatechange = function() {
 						if (this.readyState == 4 && this.status == 200) {						
-							newChild.innerHTML = this.responseText;
+							let newChild = document.createElement("div");
+							newChild.setAttribute("id", "container");
+							newChild.setAttribute("class", "rcorners");							
+							newChild.innerHTML = "<h2>A Clickable Custom Element</h2>"+this.responseText.trim();
 							let child = document.getElementById("container");
 							child.replaceWith(newChild);
 						}
