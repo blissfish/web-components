@@ -44,9 +44,7 @@ p {
 					
 				    const script = '<style>p {color: blue;font-size: 24px;</style>';
 				    const container = /*script+*/`<div id="container" class="rcorners"><h2>A Clickable Custom Element</h2><p id="content">Lorem ipsum dolor sit amet, consectetur adipisici elit ...</p></div>`;
-
 					this.toogle = 0;				    
-
 					this.innerHTML = container;
 					this.addEventListener("click", function(e) {
 						console.log('Got a click event');
