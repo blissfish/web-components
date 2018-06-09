@@ -1,58 +1,39 @@
 <html>
 <head>
 <title>Super Simple Web Component Samples</title>
-<style>
-p {
-	font-style: italic;
-	color: indigo;
-	font-size: 16px;
-}
+<link rel="stylesheet" type="text/css" href="style.css">
 
-.rcorners {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;
-	border-radius: 25px;
-	background: lightblue;
-	color: white;
-	padding: 16px;
-	width: 320px;
-	height: 120px;
-	box-shadow: 4px 4px 6px #000000;
-}
-</style>
 </head>
 <body>
 	<h1>Super Simple Web Component Samples</h1>
-		<a href="/web">Home</a>
-	
-	<p>Web components are a set of web platform APIs that allow you to
-		create new custom, reusable, encapsulated HTML tags to use in web
-		pages and web apps. Custom components and widgets build on the Web
-		Component standards, will work across modern browsers, and can be used
-		with any JavaScript library or framework that works with HTML. 
-		</p>
-	<p>from <a href="https://www.webcomponents.org/">https://www.webcomponents.org/</a></p>
+	<a href="/web">Home</a>
 	<hr />
 
-<custom-element></custom-element>
+	<div>
+		<h2>My Element</h2>
+		<p>Using a shadow dom prevents styles bleeding in or leaking out of the custom element</p>
 
-<script type="text/javascript">
-customElements.define('custom-element', class extends HTMLElement {
-	  constructor() {
-	    super();
-	    const script = '<style>p {color: blue;font-size: 24px;</style>';
-	    let shadowRoot = this.attachShadow({mode: 'open'});
-	    this.shadowRoot.innerHTML = script + `<div class="rcorners"><h2>A Clickable Custom Element</h2><p>Lorem ipsum dolor sit amet, consectetur adipisici elit ...</p></div>`;
-
-	    
-	    this.addEventListener("click", function (e) {
-	        console.log('Got a click event');
-	        console.log(e);
-	    });
-	  }
-	});
-</script>
-
-
+		<my-element></my-element>
+	</div>
+	<script type="text/javascript">
+		customElements.define('my-element',
+			class extends HTMLElement {
+				constructor() {
+					//const script = '<style>p {color: indigo;font-size: 24px;font-family: Arial, sans-serif;}</style>';
+					const script = '';
+					const content = `<p>Lorem ipsum dolor sit amet ...</p>`;
+					super();
+					let shadowRoot = this.attachShadow({
+						mode : 'open'
+					});	
+					this.shadowRoot.innerHTML = script + `<div class="rcorners"><h2>Click me</h2>` + content + `</div>`;
+					this.addEventListener("click", function(e) {
+						console.log('Click event received');
+						console.log(e);
+					});
+				}
+			}
+		);
+	</script>
 </body>
 </html>

@@ -5,22 +5,24 @@
 <title>Web Components</title>
   <script src="webcomponents-bundle.js"></script>
 
-
 </head>
 <body>
-	<a href="/web">Home</a>
+   <a href="/web">Home</a>
+ <div id="container">
   <my-checkreport></my-checkreport>
   <my-test></my-test>
+  
+  </div>
 
 <script type="text/javascript">
-window.addEventListener('check', (e) => {
-	console.log('check event received: ' );    		
+let elem = document.getElementById("container");
+elem.addEventListener('message', (e) => {	
+	console.log('Container receiving message ' );    		
 	console.log(e);
 	const event = new CustomEvent("test",{
-	      bubbles: true,
 	      cancelable: false,
-	    });
-    console.log('Dispatching test event: ');
+	});
+    console.log('Container Dispatching test event: ');
     console.log(event);
 
 	window.dispatchEvent( event);
@@ -44,19 +46,26 @@ customElements.define('my-checkreport', class extends HTMLElement {
 	  constructor() {
 	    super();
 	    //const shadowRoot = this.attachShadow({mode: 'open'});
-	    this.checkEvent = new CustomEvent("check", {
-	      bubbles: true,
-	      cancelable: false,
-	    });
-	    this.innerHTML = `
+	  
+	    this.innerHTML = `<div class="rcorners">
 	      <label>
 	        <input type="checkbox" id="my-checkbox"></input>
 	        Dummy Enabled
-	      </label>`;
+	      </label></div>`;
 	      this.addEventListener('click', (e) => {
-	      console.log('Dispatching checked event: ');
-	      console.log(e);
-	      this.dispatchEvent(this.checkEvent);
+	    	  console.log('Received click event');
+		      console.log(e);
+	      	  let msg = new CustomEvent("message", {
+		      	bubbles: true,
+		      	cancelable: false,
+		      	detail: {
+					message: "Hello World!",
+					time: new Date(),
+				}
+		      });
+	      	console.log('Dispatching message ');
+	      	console.log(msg);
+	      	this.dispatchEvent(msg);
 	    });
 	  }
 	});
@@ -65,8 +74,8 @@ customElements.define('my-checkreport', class extends HTMLElement {
 		  constructor() {
 		    super();
 		    //const shadowRoot = this.attachShadow({mode: 'open'});
-		    this.innerHTML = `<h2>MyTest</h2>`;
-		    this.addEventListener('test', (e) => console.warn('Listened on test event', e), false);
+		    this.innerHTML = `<div class="rcorners"><h2>MyTest</h2></div>`;
+		    this.addEventListener('message', (e) => console.warn('Listened on test event', e), false);
 		  }
 		});
 </script>
