@@ -6,7 +6,7 @@
         "WebComponents.org"
     ],
     "license": "MIT",
-    "main": "hello-world.html",
+    "main": "index.html",
     "keywords": [
         "web-components"
     ],

@@ -1,0 +1,80 @@
+<template id="my-template">
+<style>
+p {
+	color: darkred;
+	font-size: 16px;	
+}
+
+h2 {
+	color: darkgrey;
+	font-size: 28px;	
+}
+
+div {
+	border: 1px;
+	border-style: solid;
+	padding: 16px;
+	margin: 10px;
+	font-family: Arial, sans-serif;		
+}
+
+.rcorners {
+	border-radius: 25px;
+	background: aliceblue;	
+	box-shadow: 4px 4px 6px #000000;
+	padding: 16px;
+	margin: 10px;		
+}
+</style>
+<div id="container" class="rcorners">
+	<h2>Click me</h2>
+	<p>Lorem ipsum dolor sit amet ...</p>
+</div>
+</template>
+	<script type="text/javascript">
+		customElements.define('my-element',
+			class extends HTMLElement {
+				constructor() {
+					super();
+				    let tpl = document.currentScript.ownerDocument.querySelector('#my-template');
+
+					var clone = tpl.content.cloneNode(true);
+					let container = clone.getElementById("container");
+				    this.toogle = 0;					
+					let shadowRoot = this.attachShadow({
+						mode : 'open'
+					});
+					this.shadowRoot.appendChild(clone);	
+					this.addEventListener("click", function(e) {
+						console.log('Click event received');
+						console.log(e);
+					       if (this.toogle == 0) {
+								console.log('Custom element loads content ');	
+								this.toogle = 1;
+								this.load(shadowRoot);
+							} else {
+								console.log('Custom elements restores original ');	
+								this.toogle = 0;
+								this.shadowRoot.getElementById("container").replaceWith(container);
+							}						
+					});					
+				}
+				  load(shadowRoot) {				
+						var xhttp = new XMLHttpRequest();
+						xhttp.onreadystatechange = function() {
+							if (this.readyState == 4 && this.status == 200) {
+								let child = shadowRoot.getElementById("container");
+								let newChild = document.createElement("div");
+								newChild.setAttribute("id", "container");
+								newChild.setAttribute("class", "rcorners");
+								newChild.innerHTML = this.responseText; 
+								child.replaceWith(newChild);
+								console.log('Custom element loading content '+this.responseText );
+							}
+						};
+						xhttp.open("GET", "http://localhost:8080/web/content.html", true);
+						xhttp.send();
+					}				
+			}
+		);
+	</script>

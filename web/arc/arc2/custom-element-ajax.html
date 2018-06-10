@@ -1,0 +1,83 @@
+<html>
+<head>
+<style>
+p {
+	font-style: italic;
+	color: indigo;
+	font-size: 16px;
+}
+
+.rcorners {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	border-radius: 25px;
+	background: lightblue;
+	color: white;
+	padding: 16px;
+	width: 320px;
+	height: 120px;
+	box-shadow: 4px 4px 6px #000000;
+}
+</style>
+<title>Super Simple Web Component Samples</title>
+</head>
+<body>
+	<h1>Super Simple Web Component Samples</h1>
+		<a href="/web">Home</a>
+	
+	<p>Web components are a set of web platform APIs that allow you to
+		create new custom, reusable, encapsulated HTML tags to use in web
+		pages and web apps. Custom components and widgets build on the Web
+		Component standards, will work across modern browsers, and can be used
+		with any JavaScript library or framework that works with HTML. 
+		</p>
+	<p>from <a href="https://www.webcomponents.org/">https://www.webcomponents.org/</a></p>
+	<hr />
+	
+	<custom-element></custom-element>
+
+	<script type="text/javascript">
+		customElements.define('custom-element',
+			class extends HTMLElement {
+				constructor() {
+					super();
+					
+				    const script = '<style>p {color: blue;font-size: 24px;</style>';
+				    const container = /*script+*/`<div id="container" class="rcorners"><h2>A Clickable Custom Element</h2><p id="content">Lorem ipsum dolor sit amet, consectetur adipisici elit ...</p></div>`;
+					this.toogle = 0;				    
+					this.innerHTML = container;
+					this.addEventListener("click", function(e) {
+						console.log('Got a click event');
+						console.log(e);
+						if (this.toogle == 0) {
+							console.log('Custom elements loads content ');	
+							this.toogle = 1;
+							let newChild = document.createElement("div");
+							newChild.setAttribute("id", "container");
+							newChild.setAttribute("class", "rcorners");
+							this.load(newChild);
+						} else {
+							console.log('Custom elements restores original ' + container);	
+							this.toogle = 0;
+							this.innerHTML = container;
+						}
+					});
+				}
+				load(newChild) {				
+					let xhttp = new XMLHttpRequest();
+					xhttp.onreadystatechange = function() {
+						if (this.readyState == 4 && this.status == 200) {						
+							newChild.innerHTML = "<h2>A Clickable Custom Element</h2>"+this.responseText;
+							let child = document.getElementById("container");
+							child.replaceWith(newChild);
+						}
+					};
+					xhttp.open("GET",`content.html`, true);
+					xhttp.send();
+				}
+			}
+		);
+	</script>
+
+</body>
+</html>

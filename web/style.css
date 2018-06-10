@@ -1,0 +1,25 @@
+p {
+	color: darkblue;
+	font-size: 20px;	
+}
+
+h2 {
+	color: darkred;
+	font-size: 28px;	
+}
+
+div {
+	border: 1px;
+	border-style: solid;
+	padding: 16px;
+	margin: 10px;
+}
+
+.rcorners {
+	border-radius: 25px;
+	background: lightblue;	
+	box-shadow: 4px 4px 6px #000000;
+	padding: 16px;
+	margin: 10px;		
+}
+
